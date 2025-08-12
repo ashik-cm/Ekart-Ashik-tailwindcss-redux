@@ -431,6 +431,8 @@
                 - 1. Render the entire react app inside "BrowserRouter" component of react-router-dom library, provide this in main.jsx
                 - 2. Inorder to setup path for component , make each component must be inside "Routes" component of react-router-dom library, provide this steps inside App.jsx file  
                 - 3. To set up path for a component, Use "Route" component of react-router-dom library.Route component has attributes like "path" and "element" inorder to setup routes fo component. All Route component must be inside Route component.
+            - Dynamic Routing : we can set up a dynamic / changing value in a url along" : "symbol, soreact app will understand the value along with a : is dynamic part of this url.
+            - To setup page not found url as path *, its path must be set up the end of all url in react app
         15. High Order Components (HOC) : are components whos props argument will give another component, eg: Route Component
         16. Axios call in react :
                 - Using axios library : install : npm install axios
@@ -486,6 +488,12 @@
                 - createSlice(): used to combine action and reducer in a single file.
                 - steps to use slice for react app
                     create a js file for defining slice
+                - createAsyncThunk() : used to make Asyncronous call in redux.it accept 2 arguments , first action type string("slice-name/action-name") , 2nd argument is a callback function it can return a promise , its output can be 3 types:
+                        pending state 
+                        fullfilled state
+                        rejected state
+                "ExtraReducers" in slice can handle promise return action . Because it has define different cases to update slice state , based on promise output.
+                 
             4. Hooks used in component for managing state using redux:
                 - useSelector(state=>state.reducer_name) : used to select state from store in a component
                 - useDispatch() : used to execute an action from a component that hook will return a function that is capable of dispatching an action as its argument when we call the function
