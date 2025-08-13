@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Header from '../Components/Header'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from '../redux/slices/productSlice'
 
 
@@ -9,23 +9,48 @@ const Home = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(()=>{
+  const { allProducts, loading, errorMsg } = useSelector(state => state.productReducer)
+  console.log(allProducts, loading, errorMsg);
+
+
+  useEffect(() => {
     dispatch(fetchProducts())
-  },[])
+  }, [])
 
   return (
     <>
-      <Header insideHome={true}/>
-      <div style={{paddingTop:'100px'}} className='container px-4 mx-auto'>
-        <div className='grid grid-cols-4 gap-4'>
-          <div className="rounded border p-2 shadow-lg">
-            <img width={'100%'} height={'200px'} src="https://i0.wp.com/picjumbo.com/wp-content/uploads/detailed-shot-of-ripples-at-sunset-free-image.jpeg?w=600&quality=80" alt="" />
-            <div className='text-center'>
-              <h3 className='text-xl font-bold'>Product Name</h3>
-              <Link to={'/id/view'} className='bg-violet-600 rounded p-1 mt-3 text-white inline-block'>View More</Link>
+      <Header insideHome={true} />
+      <div style={{ paddingTop: '100px' }} className='container px-4 mx-auto'>
+        {
+          loading ?
+            <div className='flex justify-center items-center my-5 text-lg'>
+              <img width={'70px'} height={'70px'} src="https://cdn.pixabay.com/animation/2023/11/30/10/11/10-11-02-622_512.gif" alt="" />
+              <p className='text-blue-600 text-xl font-bold'>Loading....</p>
             </div>
-          </div>
-        </div>
+            :
+            <>
+              <div className='grid grid-cols-4 gap-4'>
+                {
+                  allProducts.length>0?
+                  allProducts.map(product=>(
+                <div key={product.id} className="rounded border p-2 shadow-lg">
+                  <img width={'100%'} height={'200px'} src={product.image} alt="" />
+                  <div className='text-center'>
+                    <p className='font-bold text-gray-500'>{product.brand}</p>
+                    <h3 className='text-lg font-bold'>{product.title.slice(0,20)}</h3>
+                    <Link to={`/${product.id}/view`} className='bg-violet-600 rounded p-1 mt-3 text-white inline-block'>View More</Link>
+                  </div>
+                </div>
+                  ))
+                :
+                <div className="flex justify-center items-center font-bold text-red-600 text-lg">
+                  <img src="https://cdni.iconscout.com/illustration/premium/thumb/not-found-4064375-3363936.png" alt="" />
+                  Product not found....!
+                </div>
+                }
+              </div>
+            </>
+        }
       </div>
     </>
   )
