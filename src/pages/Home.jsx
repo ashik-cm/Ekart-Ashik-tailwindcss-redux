@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,  } from 'react'
 import Header from '../Components/Header'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -34,10 +34,11 @@ const Home = () => {
                   allProducts.length>0?
                   allProducts.map(product=>(
                 <div key={product.id} className="rounded border p-2 shadow-lg">
-                  <img width={'100%'} height={'200px'} src={product.image} alt="" />
+                  <img width={'150px'} height={'150px'} src={product.image} alt="" className='mx-auto d-block'/>
                   <div className='text-center'>
                     <p className='font-bold text-gray-500'>{product.brand}</p>
                     <h3 className='text-lg font-bold'>{product.title.slice(0,20)}</h3>
+                    <h3 className='font-semibold text-sm'>$ {product.price}<span className='ms-5 text-red-700'>{product.discount}% off</span></h3>
                     <Link to={`/${product.id}/view`} className='bg-violet-600 rounded p-1 mt-3 text-white inline-block'>View More</Link>
                   </div>
                 </div>

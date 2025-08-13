@@ -422,6 +422,12 @@
                         - useRef(initial value) : Is a react hooks that lets you reference a value thats not need for rerendering. Initial value is optional, it returns an object "current" key
                     - Custom Hooks : Create js files to define a specific function for a special task . export the function 
                         from that file function name must start with 'use' keyword
+                    - useSelector() : hook used to select the state from a redux store.
+                    - useDispatch() : hook used to dispatch action from a component
+                    - useParams() : hook will return dynamic value of route associated with a component
+
+
+
         13. Form handling in React : There are 2 ways to manage data inside thr form by a component
             - Controlled components : Are componentswhich store from data inside its own state
             - Uncontrolled components : Components who access form data using its own DOM element reference 
