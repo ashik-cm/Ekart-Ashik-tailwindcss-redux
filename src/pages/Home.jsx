@@ -1,4 +1,4 @@
-import React, { useEffect,  } from 'react'
+import React, { useEffect, useState,  } from 'react'
 import Header from '../Components/Header'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,10 +12,28 @@ const Home = () => {
   const { allProducts, loading, errorMsg } = useSelector(state => state.productReducer)
   console.log(allProducts, loading, errorMsg);
 
+  const [currentPage,setCurrentPage] = useState(1)
+  const productPerPage = 8
+  const totalPages = Math.ceil(allProducts.length/productPerPage)
+  const currentPageProductLastIndex =currentPage * productPerPage
+  const currentPageProductFirstIndex = currentPageProductLastIndex-productPerPage
+  const visibleAllProducts = allProducts?.slice(currentPageProductFirstIndex,currentPageProductLastIndex)
 
   useEffect(() => {
     dispatch(fetchProducts())
   }, [])
+
+  const navigateToNextPage =()=>{
+    if(currentPage!=totalPages){
+      setCurrentPage(currentPage+1)
+    }
+  }
+
+  const navigateToPrevPage =()=>{
+    if(currentPage!=1){
+      setCurrentPage(currentPage-1)
+    }
+  }
 
   return (
     <>
@@ -32,7 +50,7 @@ const Home = () => {
               <div className='grid grid-cols-4 gap-4'>
                 {
                   allProducts.length>0 ?
-                  allProducts.map(product=>(
+                  visibleAllProducts.map(product=>(
                 <div key={product.id} className="rounded border p-2 shadow-lg">
                   <img width={'150px'} height={'150px'} src={product.thumbnail} alt="" className='mx-auto d-block'/>
                   <div className='text-center'>
@@ -49,6 +67,11 @@ const Home = () => {
                   Product not found....!
                 </div>
                 }
+              </div>
+              <div className="text-xl text-center font-bold mt-20">
+                <button onClick={navigateToPrevPage} className=" text-gray-700"><i class="fa-solid fa-backward"></i></button>
+                <span className=" mx-2">{currentPage} of {totalPages}</span>
+                <button onClick={navigateToNextPage} className=" text-gray-700"><i class="fa-solid fa-forward"></i></button>
               </div>
             </>
         }

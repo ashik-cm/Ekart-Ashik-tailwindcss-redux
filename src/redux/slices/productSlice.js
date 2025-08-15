@@ -16,25 +16,31 @@ const productSlice = createSlice({
     name:'products',
     initialState:{
         allProducts:[],
+        dupAllProducts:[],
         loading:false,
         errorMsg:""
     },
     reducers:{
-
+        searchProduct : (state,actionByHeader)=>{
+            state.allProducts = state.dupAllProducts.filter(item=>item.title.toLowerCase().includes(actionByHeader.payload))
+        }
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchProducts.fulfilled,(state,apiResult)=>{
             state.allProducts = apiResult.payload
+            state.dupAllProducts =apiResult.payload
             state.loading = false
             state.errorMsg = ""
         })
         builder.addCase(fetchProducts.pending,(state,apiResult)=>{
             state.allProducts = []
+            state.dupAllProducts =[]
             state.loading = true
             state.errorMsg = ""
         })
         builder.addCase(fetchProducts.rejected,(state,apiResult)=>{
             state.allProducts = []
+            state.dupAllProducts =[]
             state.loading = false
             state.errorMsg = "API Call Failed"
         })
@@ -42,4 +48,5 @@ const productSlice = createSlice({
 
 })
 
+export const {searchProduct} = productSlice.actions
 export default productSlice.reducer

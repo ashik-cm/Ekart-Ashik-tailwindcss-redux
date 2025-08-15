@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
-    <div style={{ height: '240px', marginTop: '80px' }} className="mt-5 w-full bg-violet-600 text-white p-4">
+    <div style={{ height: '240px', marginTop: '80px' }} className=" mt-5 w-full bg-violet-600 text-white p-4">
       <div className="flex justify-between p-4">
         <div className="intro" style={{ width: '400px' }}>
           <h5 className='text-xl font-bold'><i className='fa-solid fa-truck-fast me-2'></i>E-cart</h5>

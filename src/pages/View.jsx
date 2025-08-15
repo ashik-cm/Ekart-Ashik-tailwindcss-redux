@@ -3,13 +3,13 @@ import Header from '../Components/Header'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToWishlist } from '../redux/slices/wishlistSlice'
+import { addToCart } from '../redux/slices/cartSlice'
 
 const View = () => {
-
+  const userCart = useSelector(state=>state.cartReducer)
   const dispatch =useDispatch()
   const userWishlist = useSelector(state=>state.wishlistReducer)
   const [product, setProduct] = useState({})
-
   const { id } = useParams()
   console.log(id);
   const { allProducts } = useSelector(state => state.productReducer)
@@ -21,7 +21,7 @@ const View = () => {
       console.log(allProducts.find(item => item.id == id));
       setProduct(allProducts.find(item => item.id == id))
     }
-  }, [])
+  },[])
 
   const handleWishlist =()=>{
     const existingItem = userWishlist?.find(item=>item?.id==id)
@@ -32,6 +32,17 @@ const View = () => {
     }
   }
 
+  const handleCart =()=>{
+    dispatch(addToCart(product))
+    const existingItem = userCart?.find(item=>item?.id==id)
+    if(existingItem){
+      alert("Product quantity is incremented..")
+    }else{
+      alert("Product added to cart..")
+    }
+  }
+
+  
 
   return (
     <>
@@ -48,7 +59,7 @@ const View = () => {
             <p><span className='text-gray-700'>Brand </span>: {product?.brand}</p>
             <p>Catatgory : {product.category} </p>
             <p className='mb-4 mt-2'><strong>Description : </strong>{product?.description?.slice(0, 300)}</p>
-            <button className='bg-green-700 p-2 rounded font-semibold text-white'>Add to Cart</button>
+            <button onClick={handleCart} className='bg-green-700 p-2 rounded font-semibold text-white'>Add to Cart</button>
             <button onClick={handleWishlist} className='bg-blue-700 p-2 rounded ms-2 font-semibold text-white'>Add to wishlist</button>
           </div>
         </div>
